@@ -1,0 +1,335 @@
+/**
+ * Banner CTA — Asesoría técnica y comercial (footer-top).
+ *
+ * @package Abalturas
+ */
+
+.abalturas-footer-cta .abalturas-cta-banner {
+	position: relative;
+	z-index: 20;
+	margin-top: calc(-1 * var(--abalturas-footer-cta-overlap, 3.5rem));
+	border-radius: 1rem;
+	box-shadow: 0 24px 55px -18px rgba(26, 54, 93, 0.42);
+}
+
+.abalturas-cta-banner {
+	background-color: #1a365d;
+	background-image: url('../servicios/bannerfooter.png');
+	background-size: cover;
+	background-position: 72% center;
+	background-repeat: no-repeat;
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 1.5rem;
+	padding: 2.5rem var(--abalturas-footer-banner-pad-inline-end, 1.5rem) 2.5rem var(--abalturas-footer-banner-pad-inline-start, 1.5rem);
+}
+
+.abalturas-cta-banner::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: rgba(26, 54, 93, 0.88);
+	z-index: 0;
+}
+
+.abalturas-cta-banner > *:not(.cta-shield-bg) {
+	position: relative;
+	z-index: 1;
+}
+
+/* Escudo fantasma — borde derecho del banner, centrado en altura */
+.cta-shield-bg {
+	position: absolute;
+	z-index: 0;
+	top: 50%;
+	bottom: auto;
+	right: -0.8rem;
+	width: 168px;
+	height: 168px;
+	transform: translateY(calc(-50% - 0.2rem));
+	opacity: 0.09;
+	pointer-events: none;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cta-shield-bg svg {
+	width: 100%;
+	height: 100%;
+	fill: #ffffff;
+}
+
+.cta-shield-bg svg polyline {
+	stroke: #ffffff;
+}
+
+/* Contenido izquierdo */
+.cta-content {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1.2rem;
+	flex: 1 1 auto;
+	min-width: 0;
+	width: 100%;
+}
+
+/* Escudo funcional pequeño */
+.cta-icon-wrap {
+	flex-shrink: 0;
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	border: 1.5px solid #f56523;
+	background: rgba(245, 101, 35, 0.12);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cta-icon-wrap svg {
+	width: 26px;
+	height: 26px;
+	fill: none;
+	stroke: #f56523;
+	stroke-width: 1.8;
+}
+
+.cta-icon-wrap svg path {
+	fill: none;
+	stroke: #f56523;
+	stroke-width: 1.8;
+}
+
+.cta-icon-wrap svg polyline {
+	stroke: #f56523;
+	stroke-width: 1.5;
+}
+
+/* Texto */
+.cta-text {
+	min-width: 0;
+}
+
+.cta-headline {
+	color: #ffffff;
+	font-size: clamp(1rem, 2vw, 1.25rem);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	line-height: 1.35;
+	margin: 0 0 6px;
+	max-width: 28rem;
+}
+
+.cta-sub {
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 0.78rem;
+	margin: 0;
+	line-height: 1.45;
+}
+
+/* Botones */
+.cta-buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	flex: 0 0 auto;
+	width: 100%;
+}
+
+.cta-btn {
+	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	padding: 13px 22px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	border-radius: 4px;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cta-btn:hover {
+	opacity: 0.88;
+}
+
+.cta-btn:focus-visible {
+	outline: 2px solid #ffffff;
+	outline-offset: 2px;
+	opacity: 1;
+}
+
+.cta-btn svg {
+	width: 18px;
+	height: 18px;
+	fill: currentColor;
+	flex-shrink: 0;
+}
+
+.cta-btn--primary,
+.cta-btn--secondary {
+	width: 100%;
+	text-align: center;
+	justify-content: center;
+}
+
+.cta-btn--primary {
+	background: #f56523;
+	color: #ffffff;
+	border: 2px solid #f56523;
+}
+
+.cta-btn--secondary {
+	background: transparent;
+	color: #ffffff;
+	border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.cta-btn--secondary:hover {
+	background: rgba(255, 255, 255, 0.08);
+	opacity: 1;
+}
+
+/* Desktop: fila contenido + columna de botones */
+@media (min-width: 769px) {
+	.abalturas-cta-banner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 280px;
+		align-items: center;
+		gap: 2rem;
+		padding: 3rem var(--abalturas-footer-banner-pad-inline-end) 3rem var(--abalturas-footer-banner-pad-inline-start);
+	}
+
+	.cta-shield-bg {
+		top: 50%;
+		bottom: auto;
+		right: -1.3rem;
+		width: 220px;
+		height: 220px;
+		transform: translateY(calc(-50% - 0.25rem));
+		opacity: 0.1;
+	}
+
+	.cta-content {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.cta-buttons {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.cta-headline {
+		font-size: 1.2rem;
+		max-width: none;
+	}
+
+	.cta-sub {
+		font-size: 0.8125rem;
+	}
+
+	.cta-buttons {
+		width: 280px;
+		min-width: 280px;
+		max-width: 280px;
+		justify-self: end;
+	}
+
+	.cta-btn {
+		justify-content: center;
+		padding: 13px 22px;
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+		gap: 10px;
+		border-radius: 6px;
+	}
+
+	.cta-btn svg {
+		width: 1.35rem;
+		height: 1.35rem;
+	}
+
+	.cta-btn--primary {
+		box-shadow: 0 6px 20px -6px rgba(245, 101, 35, 0.55);
+	}
+
+	.cta-btn--primary:hover {
+		opacity: 1;
+		box-shadow: 0 8px 24px -6px rgba(245, 101, 35, 0.45);
+	}
+}
+
+@media (min-width: 992px) {
+	.abalturas-cta-banner {
+		padding: 4rem var(--abalturas-footer-banner-pad-inline-end) 4rem var(--abalturas-footer-banner-pad-inline-start);
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 2.5rem;
+	}
+
+	.cta-shield-bg {
+		top: 50%;
+		bottom: auto;
+		right: -1.8rem;
+		width: 260px;
+		height: 260px;
+		transform: translateY(calc(-50% - 0.3rem));
+		opacity: 0.11;
+	}
+
+	.cta-buttons {
+		width: 300px;
+		min-width: 300px;
+		max-width: 300px;
+	}
+
+	.cta-headline {
+		font-size: 1.25rem;
+	}
+
+	.cta-btn svg {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+	.cta-buttons {
+		width: 100%;
+		min-width: 0;
+		max-width: none;
+	}
+
+	.cta-btn {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.cta-shield-bg {
+		top: 50%;
+		bottom: auto;
+		right: -0.8rem;
+		width: 180px;
+		height: 180px;
+		transform: translateY(calc(-50% + 0.75rem));
+		opacity: 0.08;
+	}
+}
+
+@media (min-width: 1200px) {
+	.abalturas-cta-banner {
+		border-radius: 1.35rem;
+	}
+}

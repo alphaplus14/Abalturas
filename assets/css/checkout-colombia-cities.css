@@ -1,0 +1,92 @@
+/**
+ * Checkout Colombia — select dependiente Departamento → Ciudad.
+ */
+
+/* Orden lógico: departamento antes que ciudad (Blocks flex) */
+body.woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__state {
+	order: 7 !important;
+	flex: 1 1 100% !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	margin-top: 12px;
+}
+
+body.woocommerce-checkout .wc-block-components-address-form .wc-block-components-address-form__city {
+	order: 8 !important;
+	flex: 1 1 100% !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	margin-top: 12px;
+}
+
+/* Ciudad: mismo layout que Departamento (state-input) */
+body.woocommerce-checkout .wc-block-components-address-form__city[data-abalturas-city-select],
+body.woocommerce-checkout .abalturas-city-select-wrap.wc-block-components-state-input {
+	margin-bottom: 0;
+}
+
+body.woocommerce-checkout .wc-block-components-address-form__city .wc-blocks-components-select,
+body.woocommerce-checkout .abalturas-city-select-wrap .wc-blocks-components-select {
+	width: 100%;
+	position: relative;
+}
+
+body.woocommerce-checkout .wc-block-components-address-form__city .wc-blocks-components-select__container,
+body.woocommerce-checkout .abalturas-city-select-wrap .wc-blocks-components-select__container {
+	width: 100%;
+	position: relative;
+}
+
+/* Label idéntico al de Departamento (13px arriba, sin transform) */
+body.woocommerce-checkout .wc-block-components-address-form__city .wc-blocks-components-select__label {
+	position: absolute;
+	top: 0.375rem;
+	left: 0.625rem;
+	right: 2.5rem;
+	z-index: 1;
+	margin: 0;
+	font-size: 0.8125rem !important;
+	line-height: 1.25;
+	color: #334155;
+	transform: none !important;
+	pointer-events: none;
+}
+
+body.woocommerce-checkout .wc-block-components-address-form__city .wc-blocks-components-select__select {
+	width: 100%;
+	min-height: 50px;
+	padding: 1rem 0.875rem 0.375rem !important;
+	font-size: 1em;
+	line-height: 1.5;
+	background-color: #fff;
+}
+
+/* Anular estilos de text-input si React re-inyecta la clase */
+body.woocommerce-checkout .wc-block-components-address-form__city.wc-block-components-text-input .wc-blocks-components-select__label {
+	transform: none !important;
+	font-size: 0.8125rem !important;
+	top: 0.375rem !important;
+	left: 0.625rem !important;
+}
+
+body.woocommerce-checkout .wc-block-components-address-form__city.wc-block-components-text-input.is-active .wc-blocks-components-select__label {
+	transform: none !important;
+}
+
+.abalturas-city-select__native:disabled,
+body.woocommerce-checkout .wc-block-components-address-form__city .wc-blocks-components-select__select:disabled {
+	cursor: not-allowed;
+	opacity: 0.72;
+}
+
+/* Eliminar restos si Blocks re-inyecta el input de texto original */
+body.woocommerce-checkout .wc-block-components-address-form__city[data-abalturas-city-select] input[type='text'],
+body.woocommerce-checkout .abalturas-city-select-wrap input[type='text'] {
+	display: none !important;
+}
+
+/* Checkout clásico */
+.woocommerce-checkout .abalturas-city-select-field select,
+.woocommerce-checkout select.abalturas-city-select__native {
+	width: 100%;
+}

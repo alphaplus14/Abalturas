@@ -1,0 +1,1624 @@
+/**
+ * Ficha de producto WooCommerce — rediseño premium (alcance: .abalturas-single-product).
+ *
+ * - Rejilla centrada (~80 % del viewport en desktop), columnas 50 / 50.
+ * - Galería: imagen legible, proporcional (`object-fit: contain`), altura acotada.
+ * - Resumen: bloques compactos; en desktop altura igualada a la galería (stretch + space-between).
+ * - Tipografía y tamaños fluidos (`clamp`); CTA premium, hover elegante, todo responsive.
+ */
+
+ .abalturas-single-product {
+	--ab-card-radius: 1.25rem;
+	--ab-card-border: 1px solid rgb(226 232 240 / 0.9);
+	--ab-card-shadow:
+		0 1px 2px -1px rgb(15 23 42 / 0.05),
+		0 12px 32px -14px rgb(15 23 42 / 0.18),
+		0 28px 70px -40px rgb(15 23 42 / 0.16);
+	--ab-cta: #1a365d;
+	--ab-cta-hover: #142c4d;
+	--ab-accent: #f56523;
+	--ab-price: #0f172a;
+	--ab-text: #1e293b;
+	--ab-muted: #64748b;
+	--ab-line: rgb(241 245 249);
+	--ab-product-layout-width: min(92rem, clamp(75vw, 82vw, 85vw));
+	--ab-product-card-pad: clamp(1rem, 2vw, 1.625rem);
+	--ab-product-image-max: min(28rem, 54vw);
+	/* Ancla / cabecera sticky: evita que el título quede bajo la barra al usar #product-… o skip */
+	scroll-margin-top: clamp(5rem, 14vh, 8.5rem);
+}
+
+@media (min-width: 1024px) {
+	.abalturas-single-product {
+		--ab-product-image-max: min(30rem, 40vw);
+	}
+}
+
+@media (min-width: 1536px) {
+	.abalturas-single-product {
+		--ab-product-image-max: min(32rem, 38vw);
+	}
+}
+
+/* ——————————————————————————————————————————————————————
+   1) Rejilla principal — dos columnas alineadas verticalmente
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .abalturas-product-grid {
+	box-sizing: border-box;
+	width: var(--ab-product-layout-width);
+	max-width: 100%;
+	margin-inline: auto;
+	display: grid;
+	gap: clamp(1.125rem, 2.5vw, 1.75rem);
+	align-items: start;
+}
+
+@media (max-width: 1023px) {
+	.abalturas-single-product .abalturas-product-grid {
+		width: min(100%, 92vw);
+	}
+}
+
+@media (max-width: 639px) {
+	.abalturas-single-product .abalturas-product-grid {
+		width: min(100%, 94vw);
+	}
+}
+
+@media (min-width: 1024px) {
+	.abalturas-single-product .abalturas-product-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: clamp(1.25rem, 2vw, 2rem);
+		align-items: stretch;
+	}
+}
+
+@media (max-width: 1023px) {
+	.abalturas-single-product .abalturas-product-grid {
+		align-items: start;
+	}
+}
+
+/* ——————————————————————————————————————————————————————
+   2) Tarjeta galería
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .abalturas-product-gallery-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 0.75rem;
+	padding: var(--ab-product-card-pad);
+	background: #fff;
+	border: var(--ab-card-border);
+	border-radius: var(--ab-card-radius);
+	box-shadow: var(--ab-card-shadow);
+	position: sticky;
+	top: clamp(5.5rem, 12vh, 8.75rem);
+	width: 100%;
+	overflow: visible;
+}
+
+@media (min-width: 1024px) {
+	.abalturas-single-product .abalturas-product-gallery-card {
+		align-self: stretch;
+		height: 100%;
+		min-height: 100%;
+	}
+
+	.abalturas-single-product .abalturas-product-gallery-frame {
+		flex: 1 1 auto;
+		justify-content: center;
+	}
+}
+
+@media (max-width: 1023px) {
+	.abalturas-single-product .abalturas-product-gallery-card {
+		position: relative;
+		top: auto;
+		align-self: start;
+		height: auto;
+		min-height: 0;
+	}
+}
+
+/* Marco exterior: sin cuadrado ni overflow:hidden — miniaturas debajo del viewport principal */
+.abalturas-single-product .abalturas-product-gallery-frame {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	padding: clamp(0.5rem, 2%, 1.125rem);
+	background: #fff;
+	border-radius: 0.875rem;
+	overflow: visible;
+	box-sizing: border-box;
+}
+
+/* ——————————————————————————————————————————————————————
+   3) Galería WooCommerce — viewport cuadrado arriba · thumbs visibles abajo
+   —————————————————————————————————————————————————————— */
+/* Bloque raíz (no flex): Flexslider debe medir alto/ancho como WC espera; flex aquí suele romper viewport + miniaturas */
+.abalturas-single-product .woocommerce-product-gallery {
+	margin: 0 !important;
+	width: 100% !important;
+	height: auto !important;
+	opacity: 1 !important;
+	position: relative;
+	display: block !important;
+	overflow: visible;
+}
+
+.abalturas-single-product .woocommerce-product-gallery.flexslider {
+	display: block !important;
+}
+
+/* Sin Flexslider: el wrapper debe ocupar todo el hueco disponible */
+.abalturas-single-product .woocommerce-product-gallery:not(.flexslider) > .woocommerce-product-gallery__wrapper {
+	margin: 0 auto !important;
+	width: 100% !important;
+	max-width: 100%;
+	min-height: 0;
+	aspect-ratio: 1 / 1;
+	max-height: var(--ab-product-image-max);
+	overflow: hidden;
+	border-radius: 0.35rem;
+}
+
+/* Con Flexslider: no forzar width con !important — WC/jQuery ponen width % en línea para el carril
+ * dentro del viewport (overflow:hidden). Un 100% !important ahí puede dejar el viewport vacío. */
+.abalturas-single-product .woocommerce-product-gallery.flexslider .woocommerce-product-gallery__wrapper {
+	margin: 0 !important;
+	min-height: 0;
+}
+
+/* Flexslider pone height inline en .flex-viewport; no mezclar aspect-ratio ni min-height:0 al final — anulaba 12rem y colapsaba % / max-height de la foto grande */
+.abalturas-single-product .woocommerce-product-gallery .flex-viewport {
+	position: relative;
+	z-index: 1;
+	width: 100% !important;
+	flex-shrink: 0;
+	overflow: hidden;
+	min-height: 16rem;
+	max-height: var(--ab-product-image-max) !important;
+}
+
+.abalturas-single-product .woocommerce-product-gallery.flexslider .flex-viewport .slides {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/*
+ * No display:flex !important en <li>: Flexslider 2 usa float + anchos en px en cada slide;
+ * forzar flex anula el float y rompe translate3d / clicks en miniaturas.
+ */
+.abalturas-single-product .woocommerce-product-gallery.flexslider .flex-viewport .slides > li {
+	margin: 0 !important;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.abalturas-single-product .woocommerce-product-gallery__image {
+	margin: 0 auto !important;
+	width: 100%;
+	max-width: 100%;
+	min-height: 0;
+	height: auto !important;
+	max-height: none !important;
+	display: block;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.abalturas-single-product .woocommerce-product-gallery__image > a {
+	display: inline-block;
+	vertical-align: middle;
+	width: auto;
+	max-width: 100%;
+	min-height: 0;
+	height: auto;
+	line-height: 0;
+}
+
+/* Imagen principal: ocupa el espacio sin recortar y con leve sombra de producto */
+.abalturas-single-product .woocommerce-product-gallery__image img {
+	display: block;
+	width: auto !important;
+	height: auto !important;
+	max-width: 100% !important;
+	max-height: min(var(--ab-product-image-max), 70vh) !important;
+	margin: 0 auto !important;
+	opacity: 1 !important;
+	visibility: visible !important;
+	object-fit: contain;
+	object-position: center;
+	vertical-align: middle;
+	filter: drop-shadow(0 14px 28px rgb(15 23 42 / 0.08));
+	transition: transform 0.4s ease;
+	background: transparent;
+}
+
+/* Si jquery.zoom llegó a inicializar antes de desactivarse, suele crear .zoomImg encima — ocultarlo */
+.abalturas-single-product .woocommerce-product-gallery .zoomImg {
+	display: none !important;
+	pointer-events: none;
+}
+
+.abalturas-single-product .woocommerce-product-gallery__image:hover img {
+	transform: scale(1.03);
+}
+
+/* Botón de zoom (lupa) */
+.abalturas-single-product .woocommerce-product-gallery__trigger {
+	top: 0.85rem !important;
+	right: 0.85rem !important;
+	width: 2.5rem;
+	height: 2.5rem;
+	background: #fff;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 9999px;
+	box-shadow: 0 6px 18px rgb(15 23 42 / 0.1);
+	transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.abalturas-single-product .woocommerce-product-gallery__trigger:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 24px rgb(15 23 42 / 0.14);
+}
+
+/* ——————————————————————————————————————————————————————
+   4) Miniaturas (Flexslider clásico)
+   —————————————————————————————————————————————————————— */
+/* Una sola fila; si hay muchas, scroll horizontal.
+   Espacio entre miniaturas: generoso con pocas; menor con más ítems (:has) y en pantallas estrechas (clamp).
+   Cada <li> tiene celda fija para que el column-gap sea uniforme (evita que fotos con mucho borde blanco rompan el ritmo). */
+.abalturas-single-product .flex-control-thumbs {
+	--ab-thumb-img: 4.25rem;
+	--ab-thumb-pad: 0.35rem;
+	--ab-thumb-border: 2px;
+	--ab-thumb-cell: calc(var(--ab-thumb-img) + 2 * var(--ab-thumb-pad) + 2 * var(--ab-thumb-border));
+	display: flex !important;
+	flex-wrap: nowrap;
+	column-gap: clamp(0.25rem, 0.4rem + 0.85vw, 0.75rem);
+	row-gap: 0;
+	flex-shrink: 0;
+	width: 100%;
+	margin: 0.75rem 0 0 !important;
+	padding: 0.35rem 0 0.5rem !important;
+	list-style: none;
+	justify-content: flex-start;
+	overflow-x: auto;
+	overflow-y: visible;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scroll-snap-type: x proximity;
+	position: relative;
+	z-index: 3;
+}
+
+.abalturas-single-product .flex-control-thumbs:has(> li:nth-child(4)) {
+	column-gap: clamp(0.2rem, 0.28rem + 0.55vw, 0.52rem);
+}
+
+.abalturas-single-product .flex-control-thumbs:has(> li:nth-child(6)) {
+	column-gap: clamp(0.16rem, 0.2rem + 0.4vw, 0.4rem);
+}
+
+.abalturas-single-product .flex-control-thumbs:has(> li:nth-child(9)) {
+	column-gap: clamp(0.12rem, 0.12rem + 0.28vw, 0.3rem);
+}
+
+.abalturas-single-product .flex-control-thumbs li {
+	margin: 0 !important;
+	flex: 0 0 var(--ab-thumb-cell) !important;
+	box-sizing: border-box;
+	width: var(--ab-thumb-cell) !important;
+	min-width: var(--ab-thumb-cell) !important;
+	max-width: var(--ab-thumb-cell) !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	/* WooCommerce usa float + width % en <li>; con el ol en flex eso puede dejar miniaturas en 0×0 en algunos motores */
+	float: none !important;
+	clear: none !important;
+	scroll-snap-align: start;
+}
+
+.abalturas-single-product .flex-control-thumbs img {
+	display: block;
+	flex-shrink: 0;
+	width: var(--ab-thumb-img) !important;
+	height: var(--ab-thumb-img) !important;
+	object-fit: contain;
+	padding: var(--ab-thumb-pad);
+	border-radius: 0.65rem;
+	border: 2px solid transparent;
+	background: #fff;
+	box-shadow: 0 1px 3px rgb(15 23 42 / 0.06);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+	cursor: pointer;
+	opacity: 0.85;
+}
+
+.abalturas-single-product .flex-control-thumbs img:hover {
+	opacity: 1;
+	transform: translateY(-1px);
+}
+
+.abalturas-single-product .flex-control-thumbs .flex-active img {
+	opacity: 1;
+	border-color: var(--ab-accent);
+	box-shadow: 0 4px 12px rgb(245 101 35 / 0.22);
+}
+
+@media (max-width: 639px) {
+	.abalturas-single-product .flex-control-thumbs {
+		--ab-thumb-img: 3.75rem;
+	}
+}
+
+/* Galería “nueva” (WooCommerce reciente, sin Flexslider) */
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__wrapper {
+	display: flex;
+	flex-wrap: nowrap;
+	column-gap: clamp(0.25rem, 0.4rem + 0.85vw, 0.75rem);
+	row-gap: 0;
+	justify-content: flex-start;
+	flex-shrink: 0;
+	width: 100%;
+	margin-top: 0 !important;
+	padding: 0.35rem 0 0.5rem;
+	overflow-x: auto;
+	overflow-y: visible;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scroll-snap-type: x proximity;
+}
+
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__wrapper:has(> .woocommerce-product-gallery-thumbnails__thumbnail:nth-child(4)) {
+	column-gap: clamp(0.2rem, 0.28rem + 0.55vw, 0.52rem);
+}
+
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__wrapper:has(> .woocommerce-product-gallery-thumbnails__thumbnail:nth-child(6)) {
+	column-gap: clamp(0.16rem, 0.2rem + 0.4vw, 0.4rem);
+}
+
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__wrapper:has(> .woocommerce-product-gallery-thumbnails__thumbnail:nth-child(9)) {
+	column-gap: clamp(0.12rem, 0.12rem + 0.28vw, 0.3rem);
+}
+
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__thumbnail {
+	flex: 0 0 auto;
+	scroll-snap-align: start;
+	border-radius: 0.65rem;
+	overflow: hidden;
+	border: 2px solid transparent;
+	background: #fff;
+	box-shadow: 0 1px 3px rgb(15 23 42 / 0.06);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__thumbnail img {
+	object-fit: contain;
+	padding: 0.35rem;
+}
+
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__thumbnail.is-active,
+.abalturas-single-product .woocommerce-product-gallery-thumbnails__thumbnail:hover {
+	border-color: var(--ab-accent);
+	box-shadow: 0 4px 12px rgb(245 101 35 / 0.22);
+}
+
+
+/* ——————————————————————————————————————————————————————
+   5) Tarjeta resumen — distribución vertical equilibrada
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .abalturas-product-summary-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: clamp(0.625rem, 1.15vw, 0.875rem);
+	padding: var(--ab-product-card-pad);
+	padding-bottom: clamp(1.5rem, 2.75vw, 2.25rem);
+	background: #fff;
+	border: var(--ab-card-border);
+	border-radius: var(--ab-card-radius);
+	box-shadow: var(--ab-card-shadow);
+	width: 100%;
+	align-self: start;
+	height: auto;
+	min-height: 0;
+	box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+	.abalturas-single-product .abalturas-product-summary-card {
+		align-self: stretch;
+		height: 100%;
+		min-height: 100%;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding-bottom: var(--ab-product-card-pad);
+	}
+
+	.abalturas-single-product .product_title {
+		padding-bottom: 0.5rem;
+	}
+
+	.abalturas-single-product .woocommerce-product-details__short-description {
+		line-height: 1.55;
+	}
+
+	.abalturas-single-product form.cart {
+		padding-top: 0.625rem;
+	}
+
+	.abalturas-single-product .ab-product-trust-badges {
+		margin-top: 0.625rem;
+		padding-top: 0.625rem;
+	}
+
+	.abalturas-single-product .product_meta {
+		margin-top: 0.75rem !important;
+		padding: 0.875rem 1rem !important;
+	}
+}
+
+@media (max-width: 1023px) {
+	.abalturas-single-product .abalturas-product-summary-card {
+		justify-content: flex-start;
+	}
+}
+
+.abalturas-single-product .summary.entry-summary {
+	margin: 0 !important;
+	float: none !important;
+	width: 100% !important;
+}
+
+/* Etiqueta superior opcional (categoría / línea) — si está activa via product_meta arriba */
+.abalturas-single-product .ab-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.6875rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--ab-accent);
+}
+
+/* Título — line-height controlado, sin cortes agresivos */
+.abalturas-single-product .product_title {
+	margin: 0 !important;
+	padding-bottom: 0.625rem;
+	border-bottom: 1px solid var(--ab-line);
+	font-size: clamp(1.2rem, 2.1vw, 1.75rem) !important;
+	font-weight: 800 !important;
+	line-height: 1.18 !important;
+	letter-spacing: -0.015em;
+	color: var(--ab-price);
+	word-break: normal;
+	overflow-wrap: break-word;
+	hyphens: none;
+	text-wrap: balance;
+}
+
+/* Rating */
+.abalturas-single-product .woocommerce-product-rating {
+	margin: 0 !important;
+}
+
+/* Precio — protagonismo visual */
+.abalturas-single-product p.price {
+	margin: 0 !important;
+	font-size: clamp(1.5rem, 2.6vw, 2rem) !important;
+	font-weight: 800 !important;
+	line-height: 1 !important;
+	color: var(--ab-price) !important;
+	letter-spacing: -0.025em;
+}
+
+.abalturas-single-product p.price del {
+	font-size: 0.55em !important;
+	font-weight: 500 !important;
+	color: var(--ab-muted) !important;
+	margin-right: 0.5rem;
+	opacity: 0.75;
+}
+
+.abalturas-single-product p.price ins {
+	text-decoration: none !important;
+	color: var(--ab-cta) !important;
+}
+
+/* Descripción corta */
+.abalturas-single-product .woocommerce-product-details__short-description {
+	margin: 0 !important;
+	font-size: 0.9rem;
+	line-height: 1.65;
+	color: rgb(51 65 85);
+}
+
+.abalturas-single-product .woocommerce-product-details__short-description p {
+	margin: 0 0 0.45rem;
+}
+
+.abalturas-single-product .woocommerce-product-details__short-description p:last-child {
+	margin-bottom: 0;
+}
+
+/* Variaciones */
+.abalturas-single-product .variations_form table.variations {
+	margin: 0 0 0.5rem !important;
+	border: none;
+}
+
+.abalturas-single-product .variations_form table.variations th,
+.abalturas-single-product .variations_form table.variations td {
+	padding: 0.45rem 0 !important;
+	border: none;
+	background: transparent;
+}
+
+.abalturas-single-product .variations_form table.variations th {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--ab-text);
+	width: 7rem;
+}
+
+.abalturas-single-product .variations_form select {
+	min-height: 2.85rem;
+	width: 100%;
+	border-radius: 0.65rem;
+	border: 1px solid rgb(203 213 225);
+	padding: 0.45rem 0.85rem;
+	font-size: 0.9375rem;
+	background-color: #f8fafc;
+}
+
+.abalturas-single-product .variations_form select:focus {
+	border-color: var(--ab-cta);
+	outline: 0;
+	box-shadow: 0 0 0 3px rgb(26 54 93 / 0.12);
+}
+
+/* ——————————————————————————————————————————————————————
+   6) Carrito — botón premium, full width útil
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product form.cart {
+	margin: 0 !important;
+	padding-top: 0.75rem;
+	border-top: 1px solid var(--ab-line);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	gap: 0.625rem;
+}
+
+.abalturas-single-product form.cart .quantity {
+	margin: 0 !important;
+}
+
+.abalturas-single-product form.cart .quantity .qty {
+	width: 4.5rem;
+	min-height: 3.25rem;
+	text-align: center;
+	font-weight: 600;
+	font-size: 1rem;
+	border-radius: 0.75rem;
+	border: 1px solid rgb(203 213 225);
+	background: #f8fafc;
+	box-shadow: inset 0 1px 2px rgb(15 23 42 / 0.04);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.abalturas-single-product form.cart .quantity .qty:focus {
+	border-color: var(--ab-cta);
+	outline: 0;
+	box-shadow: 0 0 0 3px rgb(26 54 93 / 0.12);
+}
+
+.abalturas-single-product .single_add_to_cart_button,
+.abalturas-single-product form.cart .single_add_to_cart_button,
+.abalturas-single-product form.cart button.single_add_to_cart_button.button.alt {
+	flex: 1 1 auto !important;
+	min-width: 0 !important;
+	min-height: 3.25rem;
+	padding: 0.75rem 1.5rem !important;
+	font-size: 0.9375rem !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.06em !important;
+	text-transform: uppercase !important;
+	border: none !important;
+	border-radius: 0.875rem !important;
+	background: linear-gradient(180deg, var(--ab-cta) 0%, var(--ab-cta-hover) 100%) !important;
+	color: #fff !important;
+	box-shadow: 0 8px 22px -6px rgb(26 54 93 / 0.45) !important;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+	cursor: pointer !important;
+}
+
+.abalturas-single-product .single_add_to_cart_button:hover,
+.abalturas-single-product form.cart .single_add_to_cart_button:hover {
+	filter: brightness(1.06);
+	box-shadow: 0 12px 30px -8px rgb(26 54 93 / 0.55) !important;
+	transform: translateY(-1px);
+}
+
+.abalturas-single-product .single_add_to_cart_button:active,
+.abalturas-single-product form.cart .single_add_to_cart_button:active {
+	transform: translateY(0);
+	filter: brightness(0.98);
+}
+
+.abalturas-single-product .single_add_to_cart_button:disabled {
+	filter: grayscale(0.4);
+	opacity: 0.7;
+	cursor: not-allowed !important;
+	transform: none !important;
+}
+
+@media (max-width: 639px) {
+	.abalturas-single-product form.cart {
+		flex-direction: column;
+	}
+
+	.abalturas-single-product form.cart .quantity,
+	.abalturas-single-product form.cart .quantity .qty {
+		width: 100% !important;
+	}
+
+	.abalturas-single-product .single_add_to_cart_button,
+	.abalturas-single-product form.cart .single_add_to_cart_button {
+		width: 100% !important;
+		display: block !important;
+		text-align: center;
+	}
+}
+
+/* ——————————————————————————————————————————————————————
+   6b) Badges de confianza — bajo «Añadir al carrito»
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .ab-product-trust-badges {
+	margin-top: clamp(0.75rem, 1.25vw, 1rem);
+	padding-top: clamp(0.75rem, 1.25vw, 1rem);
+	border-top: 1px solid var(--ab-line);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: clamp(0.5rem, 1vw, 0.75rem);
+	width: 100%;
+}
+
+.abalturas-single-product .ab-product-trust-badges__item {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	flex: 1 1 0;
+	min-width: min(100%, 8.5rem);
+}
+
+.abalturas-single-product .ab-product-trust-badges__icon {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.125rem;
+	height: 1.125rem;
+	color: var(--ab-cta);
+}
+
+.abalturas-single-product .ab-product-trust-badges__icon svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.abalturas-single-product .ab-product-trust-badges__text {
+	font-size: clamp(0.75rem, 1.05vw, 0.8125rem);
+	font-weight: 500;
+	line-height: 1.35;
+	color: rgb(51 65 85);
+}
+
+@media (min-width: 640px) {
+	.abalturas-single-product .ab-product-trust-badges {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		column-gap: clamp(0.5rem, 1.2vw, 0.875rem);
+		row-gap: 0.5rem;
+	}
+}
+
+@media (max-width: 639px) {
+	.abalturas-single-product .ab-product-trust-badges {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+
+	.abalturas-single-product .ab-product-trust-badges__item {
+		flex: 1 1 auto;
+		width: 100%;
+		min-width: 0;
+	}
+}
+
+/* ——————————————————————————————————————————————————————
+   7) Meta (SKU / categoría / etiquetas) — ficha técnica secundaria al pie
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .product_meta {
+	margin: clamp(1.25rem, 2.25vw, 1.75rem) 0 0 !important;
+	padding: clamp(1rem, 1.75vw, 1.375rem) clamp(1rem, 1.75vw, 1.25rem) !important;
+	border-top: 1px solid rgb(226 232 240 / 0.95);
+	border-radius: 0.625rem;
+	background: #fafafa;
+	font-size: 0.8125rem;
+	line-height: 1.55;
+	color: var(--ab-muted) !important;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+@media (max-width: 639px) {
+	.abalturas-single-product .abalturas-product-summary-card {
+		padding-bottom: 1.375rem;
+	}
+
+	.abalturas-single-product .product_meta {
+		margin-top: 1.125rem !important;
+		padding: 1rem 1rem !important;
+	}
+}
+
+.abalturas-single-product .product_meta > span {
+	display: block;
+}
+
+.abalturas-single-product .product_meta .sku_wrapper,
+.abalturas-single-product .product_meta .posted_in,
+.abalturas-single-product .product_meta .tagged_as {
+	font-weight: 500;
+}
+
+.abalturas-single-product .product_meta a {
+	color: rgb(71 85 105);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-color: rgb(203 213 225);
+	transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.abalturas-single-product .product_meta a:hover {
+	color: var(--ab-accent);
+	text-decoration-color: rgb(245 101 35 / 0.5);
+}
+
+/* Compartir (si está activo) */
+.abalturas-single-product .sharedaddy,
+.abalturas-single-product .product .social-share {
+	margin-top: 0.5rem;
+}
+
+/* ——————————————————————————————————————————————————————
+   8) Información del producto — secciones apiladas
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .ab-product-info {
+	margin-top: 0;
+	padding-top: 0;
+	border-top: 0;
+	scroll-behavior: smooth;
+}
+
+.abalturas-single-product .ab-product-info__header {
+	margin-bottom: 1.25rem;
+}
+
+.abalturas-single-product .ab-product-info__eyebrow {
+	margin: 0 0 0.35rem;
+	font-size: 0.625rem;
+	font-weight: 800;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--ab-accent);
+}
+
+.abalturas-single-product .ab-product-info__title {
+	margin: 0;
+	font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+	font-weight: 800;
+	line-height: 1.25;
+	color: var(--ab-price);
+}
+
+.abalturas-single-product .ab-product-info__lead {
+	margin: 0.5rem 0 0;
+	max-width: 42rem;
+	font-size: 0.9375rem;
+	line-height: 1.55;
+	color: var(--ab-muted);
+}
+
+/* Navegación rápida entre secciones */
+.abalturas-single-product .ab-product-info-jump {
+	margin-bottom: 1rem;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+}
+
+.abalturas-single-product .ab-product-info-jump::-webkit-scrollbar {
+	display: none;
+}
+
+.abalturas-single-product .ab-product-info-jump__list {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0.45rem;
+	margin: 0;
+	padding: 0.15rem 0;
+	list-style: none;
+}
+
+.abalturas-single-product .ab-product-info-jump__link {
+	display: inline-flex;
+	align-items: center;
+	white-space: nowrap;
+	padding: 0.55rem 0.9rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: var(--ab-muted);
+	background: #f8fafc;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 9999px;
+	transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.abalturas-single-product .ab-product-info-jump__link:hover,
+.abalturas-single-product .ab-product-info-jump__link:focus-visible {
+	color: var(--ab-cta);
+	background: #fff;
+	border-color: rgb(26 54 93 / 0.22);
+	outline: none;
+}
+
+/* Bloques principales (descripción · valoraciones) */
+.abalturas-single-product .ab-product-info__stack {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.abalturas-single-product .ab-product-info__block {
+	display: block !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.abalturas-single-product .ab-product-info__block--description {
+	padding: 0 !important;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.abalturas-single-product .ab-product-info__block--reviews {
+	box-sizing: border-box;
+	padding: 2rem 2.5rem !important; /* 32px 40px — anula .ab-product-info__block { padding: 0 } */
+	background: #fff;
+	border: var(--ab-card-border);
+	border-radius: var(--ab-card-radius);
+	box-shadow: 0 4px 18px -12px rgb(15 23 42 / 0.2);
+}
+
+@media (max-width: 639px) {
+	.abalturas-single-product .ab-product-info__block--reviews {
+		padding: 1.25rem 1rem !important; /* 20px 16px */
+	}
+}
+
+.abalturas-single-product .ab-product-info__block-head {
+	margin-bottom: 0.85rem;
+	padding-bottom: 0.65rem;
+	border-bottom: 1px solid var(--ab-line);
+}
+
+.abalturas-single-product .ab-product-info__block-title {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ab-cta);
+}
+
+/* Cabecera valoraciones */
+.abalturas-single-product .ab-product-info__block-head--reviews {
+	margin-bottom: 1rem;
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.abalturas-single-product .ab-product-reviews-head {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	padding: 0.85rem 1rem;
+	background: linear-gradient(135deg, rgb(241 245 249) 0%, rgb(248 250 252) 100%);
+	border: 1px solid rgb(226 232 240);
+	border-radius: 0.75rem;
+}
+
+.abalturas-single-product .ab-product-reviews-head__icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 0.65rem;
+	background: rgb(245 101 35 / 0.12);
+	color: var(--ab-accent);
+}
+
+.abalturas-single-product .ab-product-reviews-head__icon svg {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.abalturas-single-product .ab-product-reviews-head__text {
+	flex: 1;
+	min-width: 0;
+}
+
+.abalturas-single-product .ab-product-reviews-head__title {
+	margin: 0;
+	font-size: 0.9375rem;
+	font-weight: 800;
+	line-height: 1.3;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--ab-price);
+}
+
+.abalturas-single-product .ab-product-reviews-head__meta {
+	margin: 0.25rem 0 0;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	line-height: 1.4;
+	color: var(--ab-muted);
+}
+
+.abalturas-single-product .ab-product-reviews-head__badge {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	min-width: 2rem;
+	height: 2rem;
+	padding: 0 0.55rem;
+	font-size: 0.8125rem;
+	font-weight: 800;
+	line-height: 1;
+	color: var(--ab-cta);
+	background: #fff;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 9999px;
+	box-shadow: 0 2px 6px rgb(15 23 42 / 0.06);
+}
+
+/* Tarjetas de sección dentro de la descripción */
+.abalturas-single-product .ab-product-info-sections {
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+}
+
+.abalturas-single-product .ab-product-info-section {
+	scroll-margin-top: clamp(5rem, 14vh, 8.5rem);
+	padding: clamp(0.95rem, 2.5vw, 1.2rem);
+	background: #fff;
+	border: var(--ab-card-border);
+	border-radius: 0.9rem;
+	box-shadow: 0 4px 16px -12px rgb(15 23 42 / 0.22);
+}
+
+.abalturas-single-product .ab-product-info-section__head {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	margin-bottom: 0.75rem;
+	padding-bottom: 0.65rem;
+	border-bottom: 1px solid var(--ab-line);
+}
+
+.abalturas-single-product .ab-product-info-section__icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 2.35rem;
+	height: 2.35rem;
+	border-radius: 0.65rem;
+	background: rgb(241 245 249);
+	color: var(--ab-cta);
+}
+
+.abalturas-single-product .ab-product-info-section--features .ab-product-info-section__icon,
+.abalturas-single-product .ab-product-info-section--benefits .ab-product-info-section__icon {
+	background: rgb(245 101 35 / 0.12);
+	color: var(--ab-accent);
+}
+
+.abalturas-single-product .ab-product-info-section__icon-svg {
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.abalturas-single-product .ab-product-info-section__title {
+	margin: 0;
+	font-size: 0.9375rem;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--ab-price);
+}
+
+.abalturas-single-product .ab-product-info-section__body {
+	font-size: 0.9375rem;
+	line-height: 1.7;
+	color: var(--ab-text);
+}
+
+.abalturas-single-product .ab-product-info-section__body > :first-child {
+	margin-top: 0;
+}
+
+.abalturas-single-product .ab-product-info-section__body > :last-child {
+	margin-bottom: 0;
+}
+
+.abalturas-single-product .ab-product-info-section__body p {
+	margin: 0 0 0.85rem;
+}
+
+.abalturas-single-product .ab-product-info-section__body h2,
+.abalturas-single-product .ab-product-info-section__body h3,
+.abalturas-single-product .ab-product-info-section__body h4 {
+	display: none;
+}
+
+.abalturas-single-product .ab-product-info-section__body ul,
+.abalturas-single-product .ab-product-info-section__body ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.abalturas-single-product .ab-product-info-section--features .ab-product-info-section__body ul,
+.abalturas-single-product .ab-product-info-section--benefits .ab-product-info-section__body ul {
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+}
+
+.abalturas-single-product .ab-product-info-section--features .ab-product-info-section__body li,
+.abalturas-single-product .ab-product-info-section--benefits .ab-product-info-section__body li {
+	position: relative;
+	margin: 0;
+	padding: 0.65rem 0.75rem 0.65rem 2.15rem;
+	background: #f8fafc;
+	border: 1px solid rgb(241 245 249);
+	border-radius: 0.6rem;
+	line-height: 1.45;
+}
+
+.abalturas-single-product .ab-product-info-section--features .ab-product-info-section__body li::before,
+.abalturas-single-product .ab-product-info-section--benefits .ab-product-info-section__body li::before {
+	content: "";
+	position: absolute;
+	left: 0.8rem;
+	top: 0.95rem;
+	width: 0.45rem;
+	height: 0.45rem;
+	border-radius: 9999px;
+	background: var(--ab-accent);
+}
+
+.abalturas-single-product .ab-product-info-section--specs .ab-product-info-section__body {
+	overflow-x: auto;
+}
+
+.abalturas-single-product .ab-product-info-section__body table {
+	width: 100%;
+	min-width: 16rem;
+	margin: 0;
+	border-collapse: collapse;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.abalturas-single-product .ab-product-info-section__body thead th {
+	padding: 0.65rem 0.85rem;
+	font-size: 0.6875rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-align: left;
+	color: var(--ab-cta);
+	background: rgb(241 245 249);
+	border-bottom: 2px solid rgb(226 232 240);
+}
+
+.abalturas-single-product .ab-product-info-section__body tbody td {
+	padding: 0.65rem 0.85rem;
+	vertical-align: top;
+	border-bottom: 1px solid rgb(241 245 249);
+}
+
+.abalturas-single-product .ab-product-info-section__body tbody tr:nth-child(even) td {
+	background: rgb(248 250 252 / 0.85);
+}
+
+.abalturas-single-product .ab-product-info-section__body tbody td:first-child {
+	font-weight: 700;
+	color: var(--ab-price);
+	white-space: nowrap;
+}
+
+.abalturas-single-product .ab-product-info-empty {
+	margin: 0;
+	padding: 1rem;
+	font-size: 0.9375rem;
+	color: var(--ab-muted);
+	background: #f8fafc;
+	border-radius: 0.75rem;
+}
+
+/* —— Valoraciones —— */
+.abalturas-single-product .ab-product-info__block--reviews .woocommerce-Reviews-title,
+.abalturas-single-product .ab-product-info__block--reviews #reviews h2 {
+	display: none;
+}
+
+.abalturas-single-product .ab-product-reviews {
+	max-width: 100%;
+	overflow: hidden;
+}
+
+.abalturas-single-product .ab-product-reviews__empty {
+	margin: 0 0 1rem;
+	padding: 0.85rem 1rem;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--ab-muted);
+	background: #f8fafc;
+	border: 1px solid rgb(241 245 249);
+	border-radius: 0.65rem;
+}
+
+.abalturas-single-product .ab-product-reviews__form-wrap {
+	margin-top: 0.75rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--ab-line);
+}
+
+.abalturas-single-product .ab-product-reviews__form {
+	max-width: 100%;
+	overflow: hidden;
+}
+
+.abalturas-single-product .ab-product-info__block--reviews #respond {
+	padding: 0;
+	margin: 0;
+}
+
+.abalturas-single-product .ab-product-reviews__form-intro {
+	margin: 0 0 1.1rem;
+	padding: 0.85rem 0 0;
+	border-top: 1px solid var(--ab-line);
+}
+
+.abalturas-single-product .ab-product-reviews__form-eyebrow {
+	display: block;
+	margin-bottom: 0.3rem;
+	font-size: 0.625rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--ab-accent);
+}
+
+.abalturas-single-product .ab-product-reviews__form-title {
+	display: block;
+	font-size: 1.0625rem;
+	font-weight: 800;
+	line-height: 1.3;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ab-price);
+	word-wrap: break-word;
+	overflow-wrap: anywhere;
+}
+
+.abalturas-single-product .ab-product-reviews__form-lead {
+	display: block;
+	margin-top: 0.35rem;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	line-height: 1.5;
+	color: var(--ab-muted);
+}
+
+.abalturas-single-product .ab-product-reviews__form-intro small {
+	display: block;
+	margin-top: 0.35rem;
+	font-size: 0.75rem;
+	font-weight: 500;
+	text-transform: none;
+	letter-spacing: 0;
+	color: var(--ab-muted);
+}
+
+/* Etiquetas del formulario */
+.abalturas-single-product .ab-review-field-label {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem 0.5rem;
+	margin: 0;
+	cursor: default;
+}
+
+.abalturas-single-product .ab-review-field-label__text {
+	font-size: 0.9375rem;
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ab-price);
+}
+
+.abalturas-single-product .ab-review-field-label__badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.15rem 0.45rem;
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ab-muted);
+	background: rgb(241 245 249);
+	border: 1px solid rgb(226 232 240);
+	border-radius: 9999px;
+}
+
+.abalturas-single-product .ab-review-form__field .ab-review-field-label {
+	margin-bottom: 0.45rem;
+}
+
+.abalturas-single-product .ab-product-reviews .commentlist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.abalturas-single-product .ab-product-reviews .commentlist .review {
+	margin: 0 0 0.75rem;
+	padding: 0.85rem 1rem;
+	background: #f8fafc;
+	border: 1px solid rgb(241 245 249);
+	border-radius: 0.65rem;
+}
+
+/* Puntuación con estrellas */
+.abalturas-single-product .ab-review-rating {
+	margin: 0 0 1rem;
+	max-width: 100%;
+}
+
+.abalturas-single-product .ab-review-rating__header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.25rem;
+	margin-bottom: 0.55rem;
+}
+
+@media (min-width: 480px) {
+	.abalturas-single-product .ab-review-rating__header {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.35rem 0.75rem;
+	}
+}
+
+.abalturas-single-product .ab-review-rating__header .ab-review-field-label {
+	width: 100%;
+}
+
+.abalturas-single-product .ab-review-rating__hint {
+	display: block;
+	padding-left: 0.15rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--ab-muted);
+	transition: color 0.18s ease;
+}
+
+.abalturas-single-product .ab-review-rating__hint.is-selected,
+.abalturas-single-product .ab-review-rating__hint.is-preview {
+	color: var(--ab-accent);
+}
+
+.abalturas-single-product .ab-review-rating__stars-wrap {
+	max-width: 100%;
+	overflow: hidden;
+}
+
+.abalturas-single-product .ab-review-rating p.stars {
+	display: block;
+	margin: 0;
+	padding: 0.35rem 0;
+	clear: none;
+	line-height: 1;
+}
+
+.abalturas-single-product .ab-review-rating p.stars span[role="group"] {
+	display: inline-flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: 0.35rem;
+	max-width: 100%;
+}
+
+.abalturas-single-product .ab-review-rating p.stars a {
+	position: relative;
+	flex-shrink: 0;
+	width: 2.75rem;
+	height: 2.75rem;
+	overflow: hidden;
+	font-size: 1.65rem;
+	line-height: 1;
+	text-indent: -999em;
+	white-space: nowrap;
+	text-decoration: none;
+	border-radius: 0.55rem;
+	transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.abalturas-single-product .ab-review-rating p.stars a::before {
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 1em;
+	height: 1em;
+	font-family: WooCommerce, star, sans-serif;
+	line-height: 1;
+	color: rgb(203 213 225);
+	content: "\e021";
+	text-indent: 0;
+	transform: translate(-50%, -50%);
+}
+
+/* Hover: rellena hasta la estrella bajo el cursor */
+.abalturas-single-product .ab-review-rating p.stars:hover a::before {
+	color: var(--ab-accent);
+	content: "\e020";
+}
+
+.abalturas-single-product .ab-review-rating p.stars a:hover ~ a::before {
+	color: rgb(203 213 225);
+	content: "\e021";
+}
+
+/* Selección confirmada */
+.abalturas-single-product .ab-review-rating p.stars.selected a.active::before {
+	color: var(--ab-accent);
+	content: "\e020";
+}
+
+.abalturas-single-product .ab-review-rating p.stars.selected a.active ~ a::before {
+	color: rgb(203 213 225);
+	content: "\e021";
+}
+
+.abalturas-single-product .ab-review-rating p.stars.selected a:not(.active)::before {
+	color: var(--ab-accent);
+	content: "\e020";
+}
+
+.abalturas-single-product .ab-review-rating p.stars a:hover {
+	background: rgb(245 101 35 / 0.08);
+}
+
+.abalturas-single-product .ab-review-rating p.stars.selected a:hover ~ a::before {
+	color: rgb(203 213 225);
+	content: "\e021";
+}
+
+.abalturas-single-product .ab-review-rating p.stars a:focus-visible {
+	outline: 2px solid rgb(245 101 35 / 0.55);
+	outline-offset: 2px;
+}
+
+.abalturas-single-product .ab-review-rating select#rating {
+	display: none !important;
+}
+
+/* Campos del formulario */
+.abalturas-single-product .ab-review-form {
+	max-width: 100%;
+}
+
+.abalturas-single-product .ab-review-form__field {
+	margin: 0 0 0.85rem;
+}
+
+.abalturas-single-product .ab-review-form__field > label:not(.ab-review-field-label) {
+	display: block;
+	margin-bottom: 0.4rem;
+	font-size: 0.9375rem;
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ab-price);
+}
+
+.abalturas-single-product .ab-review-form__field input,
+.abalturas-single-product .ab-review-form__field textarea {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	padding: 0.7rem 0.85rem;
+	font-size: 0.9375rem;
+	line-height: 1.5;
+	color: var(--ab-text);
+	background: #fff;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 0.65rem;
+	transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.abalturas-single-product .ab-review-form__field textarea {
+	min-height: 7rem;
+	resize: vertical;
+}
+
+.abalturas-single-product .ab-review-form__field input:focus,
+.abalturas-single-product .ab-review-form__field textarea:focus {
+	border-color: rgb(26 54 93 / 0.35);
+	outline: none;
+	box-shadow: 0 0 0 3px rgb(26 54 93 / 0.1);
+}
+
+.abalturas-single-product .ab-review-form .form-submit {
+	display: flex;
+	justify-content: center;
+	margin: 1rem 0 0;
+}
+
+.abalturas-single-product #respond .ab-review-form__submit,
+.abalturas-single-product .ab-review-form input[type="submit"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.85rem;
+	width: 100%;
+	padding: 0.65rem 1.25rem;
+	font-size: 0.8125rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #fff !important;
+	background: var(--ab-accent) !important;
+	border: 0 !important;
+	border-radius: 0.65rem;
+	box-shadow: none;
+	cursor: pointer;
+	transition: background-color 0.18s ease, opacity 0.18s ease;
+}
+
+.abalturas-single-product #respond .ab-review-form__submit:hover,
+.abalturas-single-product .ab-review-form input[type="submit"]:hover {
+	background: #dd5518 !important;
+}
+
+.abalturas-single-product .ab-review-form__submit:focus-visible {
+	outline: 2px solid rgb(245 101 35 / 0.55);
+	outline-offset: 2px;
+}
+
+.abalturas-single-product .ab-product-reviews__verify,
+.abalturas-single-product .ab-review-form__login {
+	margin: 0;
+	padding: 0.85rem 1rem;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--ab-muted);
+	background: #f8fafc;
+	border-radius: 0.65rem;
+}
+
+@media (min-width: 480px) {
+	.abalturas-single-product .ab-review-rating p.stars a {
+		width: 3rem;
+		height: 3rem;
+		font-size: 1.85rem;
+	}
+
+}
+
+@media (min-width: 1024px) {
+	.abalturas-single-product #respond .ab-review-form__submit,
+	.abalturas-single-product .ab-review-form input[type="submit"] {
+		width: 50%;
+		min-width: 0;
+		max-width: 22rem;
+		margin-inline: auto;
+	}
+}
+
+/* Ocultar pestañas clásicas si WooCommerce las inyecta */
+.abalturas-single-product .ab-product-info ul.tabs.wc-tabs {
+	display: none !important;
+}
+
+.abalturas-single-product .ab-product-info .woocommerce-Tabs-panel {
+	display: block !important;
+}
+
+/* ——————————————————————————————————————————————————————
+   9) Etiqueta «Oferta»
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .abalturas-product-gallery-card span.onsale {
+	position: absolute;
+	top: 1.25rem;
+	left: 1.25rem;
+	z-index: 5;
+	min-height: 0;
+	min-width: 0;
+	padding: 0.4rem 0.95rem;
+	font-size: 0.6875rem;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #fff;
+	background: linear-gradient(135deg, var(--ab-accent) 0%, #dd5518 100%);
+	border-radius: 9999px;
+	box-shadow: 0 6px 18px rgb(245 101 35 / 0.35);
+}
+
+/* Placeholder cuando aún no hay imagen */
+.abalturas-single-product .woocommerce-product-gallery__image--placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 12rem;
+	width: 100%;
+}
+
+/* ——————————————————————————————————————————————————————
+  10) Avisos WooCommerce (errores/éxito al añadir al carrito)
+   —————————————————————————————————————————————————————— */
+.abalturas-single-product .woocommerce-message,
+.abalturas-single-product .woocommerce-info,
+.abalturas-single-product .woocommerce-error {
+	border-radius: 0.85rem;
+	border-left-width: 4px;
+	font-size: 0.9375rem;
+}

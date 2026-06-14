@@ -1,0 +1,54 @@
+/**
+ * Home — secciones edge-to-edge; contenido en .abalturas-home__inner (site-brand.css)
+ *
+ * @package Abalturas
+ */
+
+#abalturas-main.abalturas-home {
+	width: 100%;
+	max-width: none;
+	background-color: transparent;
+}
+
+#abalturas-main.abalturas-home > section {
+	width: 100%;
+	max-width: none;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#abalturas-main.abalturas-home > section:first-of-type {
+	margin-top: -1px;
+}
+#abalturas-main.abalturas-home > section:first-of-type > div.relative.z-10 {
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+	#abalturas-main.abalturas-home > section:first-of-type > div.relative.z-10 {
+		padding-top: 2rem;
+	}
+}
+
+/* Sin línea blanca entre la nav charcoal y el hero */
+body.home #abalturas-shell > header {
+	background-color: transparent;
+	border-bottom-color: transparent;
+	box-shadow: none;
+}
+
+body.home #abalturas-shell > header > .flex-col > .abalturas-site-inner {
+	background-color: #fff;
+}
+
+@media (min-width: 1920px) {
+	#abalturas-main.abalturas-home > section:first-of-type {
+		min-height: min(100svh, 52rem);
+	}
+
+	#abalturas-main.abalturas-home > section:first-of-type img.object-cover {
+		object-position: 58% 32%;
+	}
+}

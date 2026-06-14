@@ -1,0 +1,87 @@
+/**
+ * Pedido recibido — anulaciones mínimas sobre estilos WooCommerce.
+ *
+ * @package Abalturas
+ */
+
+.ab-thankyou.woocommerce-order {
+	margin: 0;
+	padding: 0;
+	max-width: none;
+}
+
+/* WooCommerce clearfix en ul.order_details crea un ::before que ocupa la 1.ª celda del grid. */
+.ab-thankyou .ab-thankyou-summary.order_details::before,
+.ab-thankyou .ab-thankyou-summary.order_details::after {
+	content: none !important;
+	display: none !important;
+}
+
+.ab-thankyou .ab-thankyou-summary.order_details {
+	margin-bottom: 0 !important;
+}
+
+.ab-thankyou .ab-thankyou-summary.order_details > li {
+	float: none !important;
+	margin: 0 !important;
+	padding-right: 0 !important;
+	border-right: none !important;
+	text-transform: none !important;
+	font-size: inherit !important;
+	line-height: inherit !important;
+	list-style: none !important;
+}
+
+.ab-thankyou .ab-thankyou-summary.order_details > li strong {
+	font-size: inherit !important;
+	line-height: inherit !important;
+}
+
+.ab-thankyou .woocommerce-order-details,
+.ab-thankyou .woocommerce-customer-details {
+	margin: 0;
+	padding: 5px;
+	float: none;
+	width: 100%;
+}
+
+.ab-thankyou .shop_table {
+	border: none !important;
+	margin: 0 !important;
+}
+
+.ab-thankyou .shop_table td,
+.ab-thankyou .shop_table th {
+	border: none !important;
+	background: transparent !important;
+}
+
+.ab-thankyou .woocommerce-table__product-name dl.variation {
+	margin: 0.35rem 0 0;
+	font-size: 0.8125rem;
+	color: #64748b;
+}
+
+.ab-thankyou .woocommerce-table__product-name .wc-item-meta {
+	margin: 0.35rem 0 0;
+	padding: 0;
+	list-style: none;
+	font-size: 0.8125rem;
+	color: #64748b;
+}
+
+.ab-thankyou address {
+	font-style: normal;
+	line-height: 1.6;
+}
+
+.ab-thankyou__cta .cta-btn {
+	width: auto;
+	min-height: 2.875rem;
+}
+
+.ab-thankyou__cta .cta-btn--primary:hover {
+	background: #de5317;
+	border-color: #de5317;
+	opacity: 1;
+}

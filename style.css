@@ -1,0 +1,16 @@
+/*
+Theme Name: Abalturas
+Description: Tema para ingeniería y e-commerce — home con Tailwind (CDN) y secciones industriales.
+Version: 1.0.0
+Author: Abalturas
+Text Domain: abalturas
+*/
+
+/* Variables de marca (referencia; estilos principales vía Tailwind en front-page) */
+:root {
+	--abalturas-industrial: #1a365d;
+	--abalturas-safety: #f56523;
+	--abalturas-carbon: #2d3748;
+	--abalturas-charcoal: #1a202c;
+	--abalturas-mist: #f7fafc;
+}

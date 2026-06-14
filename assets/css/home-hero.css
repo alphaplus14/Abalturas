@@ -1,0 +1,45 @@
+/**
+ * Home hero — bloque copy izquierdo, botones apilados (referencia portada).
+ */
+
+/* Botones: columna; móvil/tablet mismo ancho */
+#abalturas-main.abalturas-home > section:first-of-type .abalturas-home__inner div.mt-11.flex {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	justify-content: flex-start;
+}
+
+#abalturas-main.abalturas-home > section:first-of-type .abalturas-home__inner div.mt-11.flex > a {
+	flex: 0 0 auto;
+	width: 100%;
+	min-width: 0;
+	max-width: none;
+	align-self: stretch;
+}
+
+@media (min-width: 1024px) {
+	#abalturas-main.abalturas-home > section:first-of-type .abalturas-home__inner > div {
+		margin-left: 0;
+		margin-right: auto;
+		max-width: 28rem;
+	}
+
+	#abalturas-main.abalturas-home > section:first-of-type .abalturas-home__inner > div > p.mt-7 {
+		text-align: left;
+		max-width: none;
+	}
+
+	#abalturas-main.abalturas-home > section:first-of-type .abalturas-home__inner div.mt-11.flex {
+		margin-top: 2.5rem;
+		width: 100%;
+	}
+
+	/* Escritorio: «Cotizar» más corto; «Tienda online» ancho completo */
+	#abalturas-main.abalturas-home > section:first-of-type .abalturas-home__inner div.mt-11.flex > a:first-child {
+		width: auto;
+		min-width: 14rem;
+		max-width: max-content;
+		align-self: flex-start;
+	}
+}

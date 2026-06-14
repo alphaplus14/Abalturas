@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Equivalente práctico a lo que permitía el playground del CDN para skip links.
+ * `sr-only` + `focus:not-sr-only` en header.php.
+ */
+@layer utilities {
+	.not-sr-only {
+		position: static;
+		width: auto;
+		height: auto;
+		padding: 0;
+		margin: 0;
+		overflow: visible;
+		clip: auto;
+		-webkit-clip-path: none;
+		clip-path: none;
+		white-space: normal;
+		border-width: 0;
+	}
+}

@@ -1,0 +1,911 @@
+/**
+ * Logo de marca — presencia fuerte y consistente en todo el sitio.
+ * Header: ancla visual principal (~70–78 % de la barra superior).
+ * Footer: ~88 % del header para no competir con columnas de navegación.
+ */
+:root {
+	--abalturas-logo-height: 3.75rem;
+	--abalturas-logo-width: calc(var(--abalturas-logo-height) * 1268 / 666);
+	--abalturas-site-gutter: 1rem;
+	--abalturas-content-max: 80rem;
+}
+
+@media (min-width: 640px) {
+	:root {
+		--abalturas-logo-height: 4.5rem;
+		--abalturas-site-gutter: 1.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	:root {
+		--abalturas-logo-height: 5rem;
+		--abalturas-site-gutter: 2rem;
+	}
+}
+
+@media (min-width: 1280px) {
+	:root {
+		--abalturas-site-gutter: 2.5rem;
+	}
+}
+
+@media (min-width: 1536px) {
+	:root {
+		--abalturas-content-max: 90rem;
+	}
+}
+
+@media (min-width: 1920px) {
+	:root {
+		--abalturas-content-max: 100rem;
+		--abalturas-site-gutter: 3rem;
+	}
+}
+
+@media (min-width: 2560px) {
+	:root {
+		--abalturas-content-max: 110rem;
+		--abalturas-site-gutter: 3.5rem;
+	}
+}
+
+/* Contenedor global: ver bloque «Ancho completo forzado» al final del archivo. */
+
+.abalturas-brand-logo {
+	display: block;
+	flex-shrink: 0;
+	height: var(--abalturas-logo-height) !important;
+	width: var(--abalturas-logo-width) !important;
+	min-height: var(--abalturas-logo-height);
+	min-width: var(--abalturas-logo-width);
+	max-width: none !important;
+	object-fit: contain;
+	object-position: left center;
+}
+
+/* Barra superior: reglas movidas al bloque .abalturas-site-inner del header (más abajo) */
+
+footer .abalturas-brand-logo {
+	height: calc(var(--abalturas-logo-height) * 0.88) !important;
+	width: calc(var(--abalturas-logo-width) * 0.88) !important;
+	min-height: calc(var(--abalturas-logo-height) * 0.88);
+	min-width: calc(var(--abalturas-logo-width) * 0.88);
+	object-position: left center;
+}
+
+/* —— Pie: banner CTA (capas, copy B2B, jerarquía botones) —— */
+:root {
+	--abalturas-footer-cta-overlap: 4rem;
+	--abalturas-brand-industrial: #1a365d;
+	--abalturas-brand-safety: #f56523;
+	--abalturas-footer-accent-height: 4px;
+}
+
+@media (min-width: 768px) {
+	:root {
+		--abalturas-footer-cta-overlap: 4.75rem;
+	}
+}
+
+#abalturas-site-footer {
+	display: flex;
+	flex-direction: column;
+	isolation: isolate;
+	position: relative;
+}
+
+body.abalturas-has-footer-cta-banner #abalturas-site-footer {
+	margin-top: 0;
+}
+
+body.abalturas-has-footer-cta-banner #abalturas-main {
+	padding-bottom: calc(var(--abalturas-footer-cta-overlap) + 1.5rem);
+}
+
+/* Evita que el solapamiento tape paginación o CTAs del contenido */
+body.abalturas-has-footer-cta-banner #abalturas-main > *:last-child {
+	position: relative;
+	z-index: 0;
+}
+
+/* —— Menú móvil (B2B / seguridad industrial) —— */
+.ab-mobile-nav__icon--close {
+	display: none;
+}
+
+#mobile-nav-ab:checked ~ .flex-col .ab-mobile-nav__icon--open {
+	display: none;
+}
+
+#mobile-nav-ab:checked ~ .flex-col .ab-mobile-nav__icon--close {
+	display: block;
+}
+
+#mobile-nav-ab:checked ~ .flex-col .ab-mobile-nav__toggle {
+	background: rgb(241 245 249);
+	color: var(--abalturas-brand-industrial, #1a365d);
+}
+
+@media (min-width: 1024px) {
+	.ab-mobile-nav {
+		display: none !important;
+	}
+}
+
+.ab-mobile-nav {
+	position: relative;
+	z-index: 40;
+	width: 100%;
+	max-height: min(88vh, 36rem);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	border-top: 1px solid rgb(226 232 240);
+	background: #f8fafc;
+	box-shadow: 0 18px 40px -16px rgb(15 23 42 / 0.28);
+	animation: ab-mobile-nav-in 0.22s ease-out;
+}
+
+@keyframes ab-mobile-nav-in {
+	from {
+		opacity: 0;
+		transform: translateY(-0.35rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.ab-mobile-nav__panel {
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+	padding: 0 0.75rem 1rem;
+}
+
+@media (min-width: 640px) {
+	.ab-mobile-nav__panel {
+		padding-inline: 1rem;
+	}
+}
+
+.ab-mobile-nav__head {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin: 0 -0.75rem;
+	padding: 0.85rem 0.85rem 0.75rem;
+	background: var(--abalturas-brand-industrial, #1a365d);
+	color: #fff;
+}
+
+@media (min-width: 640px) {
+	.ab-mobile-nav__head {
+		margin-inline: -1rem;
+		padding-inline: 1rem;
+	}
+}
+
+.ab-mobile-nav__eyebrow {
+	margin: 0;
+	font-size: 0.625rem;
+	font-weight: 800;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: rgb(255 255 255 / 0.72);
+}
+
+.ab-mobile-nav__tagline {
+	margin: 0.2rem 0 0;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.ab-mobile-nav__close {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 9999px;
+	border: 1px solid rgb(255 255 255 / 0.22);
+	background: rgb(255 255 255 / 0.08);
+	color: #fff;
+	cursor: pointer;
+}
+
+.ab-mobile-nav__close svg {
+	width: 1.1rem;
+	height: 1.1rem;
+}
+
+.ab-mobile-nav__search-field {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	padding: 0.65rem 0.85rem;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 0.65rem;
+	background: #fff;
+	box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+}
+
+.ab-mobile-nav__search-field svg {
+	width: 1.1rem;
+	height: 1.1rem;
+	flex-shrink: 0;
+	color: rgb(100 116 139);
+}
+
+.ab-mobile-nav__search-input {
+	width: 100%;
+	border: 0;
+	background: transparent;
+	font-size: 0.9375rem;
+	color: #0f172a;
+	outline: none;
+}
+
+.ab-mobile-nav__search-input::placeholder {
+	color: rgb(148 163 184);
+}
+
+.ab-mobile-nav__list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ab-mobile-nav__link {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-height: 3.25rem;
+	padding: 0.7rem 0.8rem;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 0.75rem;
+	background: #fff;
+	color: #0f172a;
+	text-decoration: none;
+	transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ab-mobile-nav__link:hover,
+.ab-mobile-nav__link:focus-visible {
+	border-color: rgb(26 54 93 / 0.25);
+	background: #fff;
+	box-shadow: 0 4px 14px -8px rgb(15 23 42 / 0.35);
+	outline: none;
+}
+
+.ab-mobile-nav__link.is-current {
+	border-color: rgb(245 101 35 / 0.45);
+	background: rgb(245 101 35 / 0.06);
+	box-shadow: inset 3px 0 0 var(--abalturas-brand-safety, #f56523);
+}
+
+.ab-mobile-nav__link--primary .ab-mobile-nav__link-icon {
+	background: rgb(245 101 35 / 0.12);
+	color: var(--abalturas-brand-safety, #f56523);
+}
+
+.ab-mobile-nav__link-icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 2.35rem;
+	height: 2.35rem;
+	border-radius: 0.6rem;
+	background: rgb(241 245 249);
+	color: var(--abalturas-brand-industrial, #1a365d);
+}
+
+.ab-mobile-nav__link-icon svg {
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+.ab-mobile-nav__link-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 0.1rem;
+	min-width: 0;
+}
+
+.ab-mobile-nav__link-label {
+	font-size: 0.8125rem;
+	font-weight: 800;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	line-height: 1.25;
+}
+
+.ab-mobile-nav__link-sub {
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1.35;
+	color: rgb(100 116 139);
+}
+
+.ab-mobile-nav__link.is-current .ab-mobile-nav__link-label {
+	color: var(--abalturas-brand-industrial, #1a365d);
+}
+
+.ab-mobile-nav__link-chevron {
+	flex-shrink: 0;
+	width: 1rem;
+	height: 1rem;
+	color: rgb(148 163 184);
+}
+
+.ab-mobile-nav__cta {
+	margin-top: 0.15rem;
+	padding: 0.85rem;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 0.75rem;
+	background: #fff;
+}
+
+.ab-mobile-nav__cta-label {
+	margin: 0 0 0.6rem;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgb(100 116 139);
+}
+
+.ab-mobile-nav__cta-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.ab-mobile-nav__cta-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+	min-height: 2.75rem;
+	padding: 0.55rem 0.85rem;
+	border-radius: 0.55rem;
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: opacity 0.18s ease, background-color 0.18s ease;
+}
+
+.ab-mobile-nav__cta-btn svg {
+	width: 1.05rem;
+	height: 1.05rem;
+	flex-shrink: 0;
+}
+
+.ab-mobile-nav__cta-btn--primary {
+	background: var(--abalturas-brand-safety, #f56523);
+	color: #fff;
+}
+
+.ab-mobile-nav__cta-btn--secondary {
+	border: 2px solid var(--abalturas-brand-industrial, #1a365d);
+	background: transparent;
+	color: var(--abalturas-brand-industrial, #1a365d);
+}
+
+.ab-mobile-nav__cta-btn:hover {
+	opacity: 0.92;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ab-mobile-nav {
+		animation: none;
+	}
+}
+
+/* Contenedor interior compartido (header, home, footer) */
+.abalturas-site-inner,
+.abalturas-home__inner {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: var(--abalturas-content-max);
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+	.abalturas-site-inner,
+	.abalturas-home__inner {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.abalturas-site-inner,
+	.abalturas-home__inner {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+}
+
+/* Header: barra superior y menú a ancho casi completo (más ancho que max-w-7xl) */
+#abalturas-shell > header .abalturas-site-inner {
+	max-width: none !important;
+	width: 100% !important;
+}
+
+/* Barra superior: logo + utilidades (dentro de .abalturas-site-inner) */
+#abalturas-shell header .abalturas-site-inner > .relative.flex {
+	align-items: center;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	min-height: calc(var(--abalturas-logo-height) + 1rem);
+}
+
+@media (min-width: 640px) {
+	#abalturas-shell header .abalturas-site-inner > .relative.flex {
+		padding-top: 0.625rem;
+		padding-bottom: 0.625rem;
+		min-height: calc(var(--abalturas-logo-height) + 1.25rem);
+	}
+}
+
+@media (min-width: 1024px) {
+	#abalturas-shell header .abalturas-site-inner > .relative.flex {
+		padding-top: 0.78125rem;
+		padding-bottom: 0.78125rem;
+		min-height: 6.5625rem;
+	}
+}
+
+/* Nav charcoal escritorio — más compacta */
+@media (min-width: 1024px) {
+	#abalturas-shell header > div > nav.bg-charcoal {
+		padding-top: 0.375rem;
+		padding-bottom: 0.375rem;
+	}
+
+	#abalturas-shell header > div > nav.bg-charcoal a {
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+	}
+}
+
+#abalturas-shell header .abalturas-site-brand {
+	flex-shrink: 0;
+	min-width: var(--abalturas-logo-width);
+	max-width: none;
+	margin-left: 0;
+	margin-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+	#abalturas-shell header .abalturas-site-brand {
+		margin-right: 1.75rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	#abalturas-shell header .abalturas-site-brand {
+		margin-right: 2rem;
+	}
+}
+
+/* ==========================================================================
+   Ancho completo — shell sin gutter; header/footer usan .abalturas-site-inner
+   ========================================================================== */
+body #abalturas-shell,
+body #abalturas-shell.abalturas-site-shell,
+body #abalturas-main {
+	box-sizing: border-box !important;
+	width: 100% !important;
+	max-width: none !important;
+}
+
+body #abalturas-shell,
+body #abalturas-shell.abalturas-site-shell {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+body #abalturas-shell {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+body #abalturas-shell > header {
+	width: 100% !important;
+	max-width: none !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+body #abalturas-shell > #abalturas-main:not(.abalturas-home) {
+	padding-left: var(--abalturas-site-gutter, 1.25rem) !important;
+	padding-right: var(--abalturas-site-gutter, 1.25rem) !important;
+}
+
+/* —— Pie: banner CTA + columnas — alineación horizontal compartida —— */
+:root {
+	--abalturas-footer-banner-pad-inline-start: 1.5rem;
+	--abalturas-footer-banner-pad-inline-end: 1.5rem;
+}
+
+@media (min-width: 769px) {
+	:root {
+		--abalturas-footer-banner-pad-inline-start: 2.5rem;
+		--abalturas-footer-banner-pad-inline-end: 2.5rem;
+	}
+}
+
+@media (min-width: 992px) {
+	:root {
+		--abalturas-footer-banner-pad-inline-end: 3rem;
+	}
+}
+
+body #abalturas-site-footer .abalturas-site-inner {
+	box-sizing: border-box !important;
+	width: 100% !important;
+	max-width: none !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	padding-left: var(--abalturas-site-gutter) !important;
+	padding-right: var(--abalturas-site-gutter) !important;
+}
+
+/* Columnas del pie: mismo contenedor (sin padding extra del banner CTA) */
+body #abalturas-site-footer .abalturas-footer-columns .abalturas-site-inner {
+	max-width: var(--abalturas-content-max) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+body #abalturas-site-footer .abalturas-footer-grid {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+/* —— Pie: columnas alineadas —— */
+.abalturas-footer-grid {
+	--abalturas-footer-col-gap: 1.75rem;
+	--abalturas-footer-row-gap: 2rem;
+	display: grid;
+	align-items: start;
+	gap: var(--abalturas-footer-row-gap) var(--abalturas-footer-col-gap);
+}
+
+.abalturas-footer-col,
+.abalturas-footer-contact,
+.abalturas-footer-brand {
+	align-self: start;
+	min-width: 0;
+}
+
+.abalturas-footer-col h3,
+.abalturas-footer-contact h3 {
+	margin: 0;
+	line-height: 1.25;
+}
+
+.abalturas-footer-links,
+.abalturas-footer-contact-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin: 1.5rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.abalturas-footer-contact-list > li {
+	margin: 0;
+	padding: 0;
+}
+
+.abalturas-footer-contact-list a {
+	align-items: flex-start;
+}
+
+.abalturas-footer-contact-list a > span[aria-hidden="true"] {
+	margin-top: 0;
+}
+
+.abalturas-footer-contact-list a > span.leading-snug {
+	padding-top: 0;
+}
+
+.abalturas-footer-nav-group {
+	display: grid;
+	align-items: start;
+	gap: var(--abalturas-footer-row-gap, 2rem) var(--abalturas-footer-col-gap, 1.5rem);
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+	.abalturas-footer-nav-group {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+/* Mobile: marca arriba; columnas en cuadrícula 2×2 */
+@media (max-width: 767px) {
+	.abalturas-footer-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.abalturas-footer-brand {
+		grid-column: 1 / -1;
+	}
+
+	.abalturas-footer-nav-group {
+		display: contents;
+	}
+
+	.abalturas-footer-contact {
+		padding-left: 0;
+		border-left: 0;
+	}
+}
+
+/* Desktop: fila flex — marca a la izquierda, contacto a la derecha */
+@media (min-width: 768px) {
+	.abalturas-footer-grid {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 2rem;
+	}
+
+	.abalturas-footer-brand {
+		flex: 0 1 16rem;
+		max-width: 18rem;
+	}
+
+	.abalturas-footer-brand > a {
+		display: inline-flex;
+		margin-left: 0;
+	}
+
+	.abalturas-footer-brand .abalturas-brand-logo {
+		margin-left: 0;
+	}
+
+	.abalturas-footer-brand > p {
+		text-align: justify;
+		hyphens: auto;
+	}
+
+	.abalturas-footer-nav-group {
+		display: flex;
+		flex: 1 1 auto;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 2rem;
+		min-width: 0;
+		padding-left: 2.5rem;
+		border-left: 1px solid rgb(203 213 225 / 0.65);
+	}
+
+	.abalturas-footer-nav-group .abalturas-footer-col {
+		flex: 0 1 auto;
+		min-width: 0;
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.abalturas-footer-contact {
+		flex: 0 1 14rem;
+		max-width: 16rem;
+		padding-left: 2.5rem;
+		border-left: 1px solid rgb(203 213 225 / 0.65);
+	}
+}
+
+@media (min-width: 1024px) {
+	.abalturas-footer-grid {
+		--abalturas-footer-col-gap: 3rem;
+		gap: 3rem;
+	}
+
+	.abalturas-footer-nav-group {
+		gap: 3rem;
+	}
+}
+
+@media (min-width: 1280px) {
+	.abalturas-footer-grid {
+		--abalturas-footer-col-gap: 3.5rem;
+		gap: 3.5rem;
+	}
+
+	.abalturas-footer-brand {
+		flex-basis: 18rem;
+		max-width: 20rem;
+	}
+
+	.abalturas-footer-nav-group {
+		gap: 3.5rem;
+	}
+
+	.abalturas-footer-contact {
+		flex-basis: 15rem;
+		max-width: 17rem;
+	}
+}
+
+/* Bloque legal: línea a ancho completo, anclado al fondo del pie */
+.abalturas-footer-columns {
+	flex: 1 1 auto;
+	padding-bottom: 0;
+}
+
+/* Servicios / Sobre nosotros: franja de marca + aire antes del footer */
+body.abalturas-page-servicios #abalturas-main,
+body.abalturas-page-sobre-nosotros #abalturas-main {
+	padding-bottom: 2rem !important;
+}
+
+body.abalturas-page-servicios #abalturas-main > .w-full,
+body.abalturas-page-sobre-nosotros #abalturas-main > .w-full {
+	padding-bottom: 0 !important;
+}
+
+@media (min-width: 640px) {
+	body.abalturas-page-servicios #abalturas-main,
+	body.abalturas-page-sobre-nosotros #abalturas-main {
+		padding-bottom: 2.5rem !important;
+	}
+}
+
+@media (min-width: 1024px) {
+	body.abalturas-page-servicios #abalturas-main,
+	body.abalturas-page-sobre-nosotros #abalturas-main {
+		padding-bottom: 3rem !important;
+	}
+}
+
+body.abalturas-page-servicios #abalturas-site-footer,
+body.abalturas-page-sobre-nosotros #abalturas-site-footer {
+	margin-top: 0 !important;
+}
+
+body.abalturas-page-servicios .abalturas-footer-columns,
+body.abalturas-page-sobre-nosotros .abalturas-footer-columns {
+	display: flex;
+	flex-direction: column;
+	padding-top: 0 !important;
+}
+
+body.abalturas-page-servicios .abalturas-footer-columns::before,
+body.abalturas-page-sobre-nosotros .abalturas-footer-columns::before {
+	content: "";
+	display: block;
+	flex: 0 0 var(--abalturas-footer-accent-height);
+	width: 100%;
+	height: var(--abalturas-footer-accent-height);
+	background: linear-gradient(
+		90deg,
+		var(--abalturas-brand-industrial) 0 70%,
+		var(--abalturas-brand-safety) 70% 100%
+	);
+	pointer-events: none;
+}
+
+body.abalturas-page-servicios .abalturas-footer-columns > .abalturas-site-inner,
+body.abalturas-page-sobre-nosotros .abalturas-footer-columns > .abalturas-site-inner {
+	flex: 1 1 auto;
+	width: 100%;
+	min-width: 0;
+	padding-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+	body.abalturas-page-servicios .abalturas-footer-columns > .abalturas-site-inner,
+	body.abalturas-page-sobre-nosotros .abalturas-footer-columns > .abalturas-site-inner {
+		padding-top: 1.75rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	body.abalturas-page-servicios .abalturas-footer-columns > .abalturas-site-inner,
+	body.abalturas-page-sobre-nosotros .abalturas-footer-columns > .abalturas-site-inner {
+		padding-top: 2rem;
+	}
+}
+
+.abalturas-footer-legal {
+	box-sizing: border-box;
+	width: 100%;
+	margin-top: 2.5rem;
+	border-top: 1px dashed rgb(203 213 225 / 0.9);
+	padding-top: 1.75rem;
+	padding-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+	.abalturas-footer-legal {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		padding-bottom: 1.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.abalturas-footer-legal {
+		margin-top: 3.5rem;
+		padding-top: 2.25rem;
+		padding-bottom: 1.75rem;
+	}
+}
+
+body #abalturas-site-footer .abalturas-site-shell {
+	box-sizing: border-box !important;
+	width: 100% !important;
+	max-width: none !important;
+	padding-left: var(--abalturas-site-gutter, 1.25rem) !important;
+	padding-right: var(--abalturas-site-gutter, 1.25rem) !important;
+}
+
+body #abalturas-shell.max-w-7xl,
+body #abalturas-shell.max-w-6xl,
+body #abalturas-shell.max-w-5xl,
+body #abalturas-shell.max-w-screen-xl,
+body #abalturas-shell.mx-auto,
+body .abalturas-site-shell.max-w-7xl,
+body .abalturas-site-shell.max-w-6xl {
+	max-width: none !important;
+	width: 100% !important;
+}
+
+/* ==========================================================================
+   Ultra-wide (1536px+) — más ancho útil, menos bandas vacías
+   ========================================================================== */
+@media (min-width: 1536px) {
+	body #abalturas-main:not(.abalturas-home) {
+		padding-left: max(var(--abalturas-site-gutter), calc((100vw - var(--abalturas-content-max)) / 2)) !important;
+		padding-right: max(var(--abalturas-site-gutter), calc((100vw - var(--abalturas-content-max)) / 2)) !important;
+	}
+}
+
+@media (min-width: 1920px) {
+	.abalturas-footer-grid {
+		--abalturas-footer-col-gap: 4rem;
+	}
+
+	.abalturas-footer-brand {
+		max-width: 24rem;
+	}
+
+	.abalturas-about-pilares__inner {
+		max-width: var(--abalturas-content-max);
+		padding-left: var(--abalturas-site-gutter);
+		padding-right: var(--abalturas-site-gutter);
+	}
+}
+
+@media (min-width: 2560px) {
+	.abalturas-footer-grid {
+		--abalturas-footer-row-gap: 3rem;
+	}
+}
+
