@@ -16,6 +16,7 @@ require_once get_stylesheet_directory() . '/inc/woocommerce-live-search.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-colombia-cities.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-thankyou.php';
 require_once get_stylesheet_directory() . '/inc/woocommerce-hide-out-of-stock.php';
+require_once get_stylesheet_directory() . '/inc/woocommerce-seo.php';
 
 /**
  * Slugs de página que muestran la guía WP de la Resolución 4272/2021 (mismo contenido).
